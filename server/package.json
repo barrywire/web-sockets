@@ -1,0 +1,19 @@
+{
+  "name": "socket-server",
+  "version": "1.0.0",
+  "description": "Node.js server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barrywire/web-sockets.git"
+  },
+  "author": "Barry Wire",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/barrywire/web-sockets/issues"
+  },
+  "homepage": "https://github.com/barrywire/web-sockets#readme"
+}
