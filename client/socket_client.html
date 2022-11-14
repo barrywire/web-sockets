@@ -5,21 +5,23 @@
     <meta charset='UTF-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
     <title>Ruby WebSocket Client</title>
-    <script src='https://cdn.tailwindcss.com'></script>
+
+
+    <!-- Font import -->
     <link rel='preconnect' href='https://fonts.googleapis.com'>
     <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
-    <link href='https://fonts.googleapis.com/css2?family=Red+Hat+Display&display=swap' rel='stylesheet'>
-    <!-- Add custom font to tailwind -->
-    <script>
-        tailwind.config({
-            theme: {
-                fontFamily: {
-                    'sans': ['Red Hat Display', 'sans-serif']
-                }
-            }
-        })
-    </script>
+    <link href='https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital@0;1&display=swap' rel='stylesheet'>
+
+    <!-- Bootstrap CSS import -->
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css' rel='stylesheet'
+        integrity='sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi' crossorigin='anonymous'>
+    <style>
+        body {
+            font-family: 'Red Hat Display', sans-serif;
+        }
+    </style>
 </head>
 
 <body>
@@ -30,20 +32,34 @@
     <div class='text-center py-4'>
         <span>Message from client: <span>Hiyaa, Let the sink in!!!</span></span>
         <br />
+        <!-- show all the messages from the server -->
         <span>Message from server: <span id='message'></span></span>
+
     </div>
 
+    <div class='container-fluid'>
+        <div class='container'>
+            <div class='py-4'>
+                <h5 class='fw-bold'>Events:</h5>
+                <span>Timestamp: </span><span id='events-timestamp'></span>
+            </div>
+        </div>
+    </div>
 
     <script>
         var ex_socket = new WebSocket('ws://localhost:2345');
         ex_socket.onopen = function (event)
         {
             ex_socket.send('Hiyaa, Let that sync in!!!');
+            document.getElementById('events-timestamp').innerHTML = Math.round(event.timeStamp * 100) / 100;
+            document.getElementById('events').innerHTML = event;
+            console.log(event);
         };
         ex_socket.onmessage = function (event)
         {
             console.log('Message from server ', event.data);
         };
+
 
         // consume the message from the server
         ex_socket.onmessage = function (event)

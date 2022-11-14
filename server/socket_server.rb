@@ -61,10 +61,18 @@ Sec-WebSocket-Accept: #{ response_key }
   unmasked_data = data.each_with_index.map { |byte, i| byte ^ mask[i % 4] }
 
   STDERR.puts "Message from client: #{ unmasked_data.pack("C*").force_encoding("utf-8").inspect }"
-  
+
+
+  response = "Hello from the server. I have sent you a message after #{ rand(1..5) } seconds."
+  socket.write [0b10000001, response.bytesize, response.bytes].flatten.pack("C*")
+  STDERR.puts "Sent message to client: #{ response.inspect }"
+  output = unmasked_data.pack("C*").force_encoding("utf-8")
+
+
   # Send data to client
-  response = "Sink that let in"
-  STDERR.puts "Sending message to client: #{ response.inspect }"
+  # response = "Sink that let in #{Time.now}"
+  # STDERR.puts "Sending message to client: #{ response.inspect }"
+  STDERR.puts "================================================="
   output = [0b10000001, response.size, response]
   socket.write output.pack("CCA#{response.size}")
 
